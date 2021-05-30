@@ -355,3 +355,4 @@ workspace.code-workspace
 # Python
 .env
 *.egg-info/
+.eggs/
