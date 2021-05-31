@@ -1,19 +1,18 @@
 """Console script for race_state."""
 import argparse
 import sys
+import time
 import logging, logging.config
 
-from .race_state import WECRace
+from race_state import WECRace, Auth
 
 
 def main():
     """Console script for race_state."""
     parser = argparse.ArgumentParser()
-    parser.add_argument('-r', '--race_URL', help='The URL from where we can fetch race data', default='')
-    parser.add_argument('-i', '--hassio_ip', help='The IP address of the Home Assistant instance', default='')
-    parser.add_argument('-u', '--username', help='The username to access HA', default='')
-    parser.add_argument('-p', '--password', help='The user\'s password', default='')
-    parser.add_argument('-s', '--select', help='The name of entity to update', default='')
+    parser.add_argument('-i', '--host', help='The IP address of the Home Assistant instance', default='')
+    parser.add_argument('-a', '--access_token', help='The required access token', default='')
+    parser.add_argument('-e', '--entity', help='The path to the entity to update', default='')
     parser.add_argument('-d', '--debug', help='The degree of debug loggin you wish for', default='info')
     parser.add_argument('_', nargs='*')
     args = parser.parse_args()
@@ -26,22 +25,22 @@ def main():
     log.info("race_state started")
     log.debug(args)
 
-    raceURL = args.race_URL
-    hassioIP = args.hassio_ip
-    hassioUsername = args.username
-    hassioPassword = args.password
-    hassioSelect = args.select
-
     currentState = "Not Started"
 
-    race = WECRace(raceURL, hassioIP, hassioUsername, hassioPassword, hassioSelect)
+    race = WECRace()
+
+    ha = Auth(args.host, args.access_token)
     
     while currentState != "Checkered":
-        tmpState = race.fetchRaceState()
+        tmpState = race.fetchState(currentState)
+        log.debug("returned tmpState = %s", tmpState)
         if tmpState != currentState:
-            race.updateHassio(tmpState)
-            currentState = tmpState
-        sleep(10)
+            resp = ha.updateEntity(args.entity, tmpState)
+            if resp.status_code == 200 or 201:
+                currentState = tmpState
+            else:
+                log.warn("Updating of Home Assistant failed with response code %i", resp.status_code)
+        time.sleep(1)
     return 0
 
 
