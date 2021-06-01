@@ -20,7 +20,8 @@ A python package to get the status of a current motor race and update an entity 
 Features
 --------
 
-* Collects data for WEC races.
+* Collects data solely for WEC races.
+* Updates a defined `input_select` entity in the defined instance of [Home Assistant](https://www.home-assistant.io/)
 
 Credits
 -------

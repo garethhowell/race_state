@@ -17,7 +17,7 @@ class HAAuth:
         self.log.debug("self.path = %s", self.path)
         self.accessToken = accessToken
 
-    def update(self, update) -> requests.Response:
+    def update(self, update: str) -> requests.Response:
         """Update the Home Assistant entity"""
         
         #Insert the access token into the request header.

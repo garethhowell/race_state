@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use Race State in a project::
+To use Race State once you have installed it:
 
     import race_state
