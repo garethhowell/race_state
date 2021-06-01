@@ -12,7 +12,9 @@ Race State
         :target: https://race-state.readthedocs.io/en/latest/?version=latest
         :alt: Documentation Status
 
-A python package to get the status of a current motor race and update an entity in Home Assistant.
+A python package to get the status of a current motor race and update an entity in `Home Assistant`_.
+
+.. _`Home Assistant`: https://www.home-assistant.io/
 
 * Free software: MIT license
 * Documentation: https://race-state.readthedocs.io.
@@ -21,7 +23,7 @@ Features
 --------
 
 * Collects data solely for WEC races.
-* Updates a defined `input_select` entity in the defined instance of [Home Assistant](https://www.home-assistant.io/)
+* Updates a defined `input_select` entity in the defined instance of _`Home Assistant`.
 
 Credits
 -------
