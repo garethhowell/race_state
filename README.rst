@@ -2,7 +2,6 @@
 Race State
 ==========
 
-
 .. image:: https://img.shields.io/pypi/v/race_state.svg
         :target: https://pypi.python.org/pypi/race_state
 
@@ -13,20 +12,15 @@ Race State
         :target: https://race-state.readthedocs.io/en/latest/?version=latest
         :alt: Documentation Status
 
-
-
-
-A python package to get the status of a current motor race and update a status select in Home Assistant.
-
+A python package to get the status of a current motor race and update an entity in Home Assistant.
 
 * Free software: MIT license
 * Documentation: https://race-state.readthedocs.io.
 
-
 Features
 --------
 
-* TODO
+* Collects data for WEC races.
 
 Credits
 -------

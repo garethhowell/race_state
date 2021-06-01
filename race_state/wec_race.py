@@ -1,34 +1,28 @@
-"""WEC Race."""
+"""WECRace Class."""
 
-# Standard libraries
-import io, os, sys, glob, time
-import logging
-import requests
 import json
+import logging
+
+import requests
 
 
-
-class WECRace():
-    """Class that will get the state of the currently-running WEC race
-    and use the returned state to update a `select` switch 
-    in the defined instance of Home Assistant.
-    """
+class WECRace:
+    """Class that will get the state of the currently-running WEC race."""
     
-    # The url from which we can get the live timing data
-
 
     def __init__(self) -> None:
         
-        self.log = logging.getLogger("race-state")
+        self.log = logging.getLogger("race_state")
         self.raceURL = "https://storage.googleapis.com/fiawec-prod/assets/live/WEC/__data.json"
 
-    def fetchState(self, currentState) -> str:
+    def fetchState(self, currentState: str) -> str:
         """Fetch the latest race data from `raceURL`
         convert to our required form and return the state"""
 
         # Mapping of WEC_specific race states to the vocabulary 
-        #  recognised by Home Assistant
+        # recognised by Home Assistant
         raceStates = {
+            "ns": "Not Started",
             "green": "Green Flag",
             "yellow": "Yellow Flag",
             "full-yellow": "FCY",
@@ -36,13 +30,10 @@ class WECRace():
             "red": "Red Flag",
             "Chk": "Checkered"
         }
-
         self.log.debug("raceStates = %s", raceStates)
 
         # Fetch json data stream from WEC timing site
-        response = requests.get(
-                                url=self.raceURL,
-                                timeout=5)
+        response = requests.get(url=self.raceURL,timeout=5)
 
         # Only process if we get a good return
         if response.status_code == 200 or response.status_code == 201:
@@ -53,6 +44,7 @@ class WECRace():
             raceState = raceStates[wecRaceState]
             self.log.debug("raceState = %s", raceState)
             return raceState
+        #Otherwise, just send back the current state.
         else:
             return currentState
 

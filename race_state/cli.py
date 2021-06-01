@@ -1,47 +1,57 @@
 """Console script for race_state."""
+
 import argparse
+import logging
+import logging.config
 import sys
 import time
-import logging, logging.config
 
-from race_state import WECRace, Auth
-
+from race_state import HAAuth, WECRace
 
 def main():
     """Console script for race_state."""
+
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--host', help='The IP address of the Home Assistant instance', default='')
+    parser.add_argument('-i', '--host', help='The IP address (or DNS name) of the Home Assistant instance', default='')
     parser.add_argument('-a', '--access_token', help='The required access token', default='')
     parser.add_argument('-e', '--entity', help='The path to the entity to update', default='')
-    parser.add_argument('-d', '--debug', help='The degree of debug loggin you wish for', default='info')
-    parser.add_argument('_', nargs='*')
+    parser.add_argument('-d', '--debug', help='The degree of debug logging you wish for', default='warn')
     args = parser.parse_args()
 
-
-    # Initialise logging
+     # Initialise logging.
     logging.basicConfig(level = {'info':logging.INFO, 'debug':logging.DEBUG}[args.debug])
     log = logging.getLogger("race_state")
-    log.setLevel({'info':logging.INFO, 'debug':logging.DEBUG}[args.debug])
-    log.info("race_state started")
+    log.setLevel({'error': logging.ERROR, 'warning': logging.WARNING, 'info':logging.INFO, 'debug':logging.DEBUG}[args.debug])
+    
     log.debug(args)
 
-    currentState = "Not Started"
-
-    race = WECRace()
-
-    ha = Auth(args.host, args.access_token)
+    log.info("race_state started")
     
+    # Initialisation.
+    currentState = "Not Started"
+    race = WECRace()
+    ha = HAAuth(args.host, args.access_token, args.entity)
+    ha.update("Not Started")
+    
+    #Check the race state every 10s and update Home Assistant if it has changed.
     while currentState != "Checkered":
         tmpState = race.fetchState(currentState)
-        log.debug("returned tmpState = %s", tmpState)
+        log.debug("Returned tmpState = %s", tmpState)
         if tmpState != currentState:
-            resp = ha.updateEntity(args.entity, tmpState)
-            if resp.status_code == 200 or 201:
+            #Update Home Assistant entity.
+            update = { "select_option": tmpState }
+            resp = ha.update(tmpState)
+            #Check if the update succeeded.
+            if resp.status_code == 200 or resp.status_code == 201:
+                #If so, update current state.
                 currentState = tmpState
             else:
-                log.warn("Updating of Home Assistant failed with response code %i", resp.status_code)
-        time.sleep(1)
+                #Otherwise ignore, we'll try again the next time around.
+                log.warning("Updating of Home Assistant failed with response code %i", resp.status_code)
+        time.sleep(10)
+    log.info("The race is over - exiting")
     return 0
+    
 
 
 if __name__ == "__main__":
