@@ -2,6 +2,8 @@
 
 """The setup script."""
 
+import os
+
 from setuptools import setup, find_packages
 
 with open('README.rst') as readme_file:
@@ -10,7 +12,12 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+the_lib_folder = os.path.dirname(os.path.realpath(__file__))
+requirement_path = the_lib_folder + 'requirements.txt'
+install_requires = []
+if os.path.isfile(requirement_path):
+    with open(requirement_path) as f:
+        install_requires = f.read().splitlines()
 
 test_requirements = ['pytest>=3', ]
 
@@ -31,7 +38,7 @@ setup(
             'race_state=race_state.cli:main',
         ],
     },
-    install_requires=requirements,
+    install_requires=install_requires,
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
