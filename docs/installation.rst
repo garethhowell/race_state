@@ -48,9 +48,7 @@ Once you have a copy of the source, you can install it with:
     $ make install
 
 Note: It is recommended that you do this in a `virtual environment`_.
-For more info on how to do this, follow `this link`_.
 
 .. _`virtual environment`: https://pypi.org/project/pyenv/
-.. _`this link`: https://pypi.org/project/pyenv/
 .. _Github repo: https://github.com/garethhowell/race_state
 .. _tarball: https://github.com/garethhowell/race_state/tarball/master
