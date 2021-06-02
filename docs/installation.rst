@@ -33,6 +33,7 @@ You can either clone the public repository:
 .. code-block:: console
 
     $ git clone git://github.com/garethhowell/race_state
+    $ cd race_state
 
 Or download the `tarball`_:
 
@@ -44,7 +45,7 @@ Once you have a copy of the source, you can install it with:
 
 .. code-block:: console
 
-    $ python setup.py install
+    $ make install
 
 
 .. _Github repo: https://github.com/garethhowell/race_state

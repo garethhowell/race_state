@@ -10,4 +10,4 @@ Sphinx
 twine
 
 pytest
-request
+requests

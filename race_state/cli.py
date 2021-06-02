@@ -3,6 +3,7 @@
 import argparse
 import logging
 import logging.config
+from race_state.race_factory import RaceFactory
 import sys
 import time
 
@@ -12,6 +13,7 @@ def main():
     """Console script for race_state."""
 
     parser = argparse.ArgumentParser()
+    parser.add_argument('-r', '--race', choices=['WEC'], help='The type of race you want to follow', default='WEC')
     parser.add_argument('-i', '--host', help='The IP address (or DNS name) of the Home Assistant instance', required=True)
     parser.add_argument('-a', '--access_token', help='The required access token', required=True)
     parser.add_argument('-e', '--entity', help='The path to the entity to update', required=True)
@@ -28,8 +30,16 @@ def main():
     log.info("race_state started")
     
     # Initialisation.
+    race_types = {'WEC':'WECRace'}
     currentState = "Not Started"
-    race = WECRace()
+
+    # Instantiate the correct race_type
+    log.debug("race = %s", args.race)
+    race_type = race_types[args.race]
+    log.debug("race_type = %s", race_type)
+    raceObj = RaceFactory()
+    race = raceObj.create(race_type)
+
     ha = HAAuth(args.host, args.access_token, args.entity)
     ha.update("Not Started")
     

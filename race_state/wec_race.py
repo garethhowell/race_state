@@ -5,14 +5,15 @@ import logging
 
 import requests
 
+from .race import Race
 
-class WECRace:
+
+class WECRace(Race):
     """Class that will get the state of the currently-running WEC race."""
     
 
     def __init__(self) -> None:
-        
-        self.log = logging.getLogger("race_state")
+        self.log =logging.getLogger("race_state")
         self.raceURL = "https://storage.googleapis.com/fiawec-prod/assets/live/WEC/__data.json"
 
     def fetchState(self, currentState: str) -> str:
