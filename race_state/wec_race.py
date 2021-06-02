@@ -7,10 +7,9 @@ import requests
 
 from .race import Race
 
-
 class WECRace(Race):
     """Class that will get the state of the currently-running WEC race."""
-    
+
 
     def __init__(self) -> None:
         self.log =logging.getLogger("race_state")
@@ -41,11 +40,11 @@ class WECRace(Race):
             data = json.loads(response.text)
             wecRaceState = data['params']['racestate']
             self.log.debug("wecRaceState = %s", wecRaceState)
-        
+
             raceState = raceStates[wecRaceState]
             self.log.debug("raceState = %s", raceState)
             return raceState
-        #Otherwise, just send back the current state.
+        # Otherwise, just send back the current state.
         else:
             return currentState
 
