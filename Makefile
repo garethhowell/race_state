@@ -86,6 +86,7 @@ pip: ## ensure pip has been installed
 
 install: clean pip ## install the package to the active Python's site-packages
 	pip install -U pip -r requirements.txt
+	python setup.py install
 
 install-dev: clean pip ## install the package in development mode
 	pip install -U -r requirements_dev.txt -e .
