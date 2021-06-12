@@ -5,8 +5,8 @@ Installation
 ============
 
 
-Stable release
---------------
+Stable release (Not currently working)
+--------------------------------------
 
 To install Race State, run this command in your terminal:
 
@@ -33,6 +33,7 @@ You can either clone the public repository:
 .. code-block:: console
 
     $ git clone git://github.com/garethhowell/race_state
+    $ cd race_state
 
 Or download the `tarball`_:
 
@@ -44,8 +45,10 @@ Once you have a copy of the source, you can install it with:
 
 .. code-block:: console
 
-    $ python setup.py install
+    $ make install
 
+Note: It is recommended that you do this in a `virtual environment`_.
 
+.. _`virtual environment`: https://pypi.org/project/pyenv/
 .. _Github repo: https://github.com/garethhowell/race_state
 .. _tarball: https://github.com/garethhowell/race_state/tarball/master

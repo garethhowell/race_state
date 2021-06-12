@@ -20,6 +20,22 @@ race\_state.ha\_auth module
    :undoc-members:
    :show-inheritance:
 
+race\_state.race module
+-----------------------
+
+.. automodule:: race_state.race
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+race\_state.race\_factory module
+--------------------------------
+
+.. automodule:: race_state.race_factory
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 race\_state.wec\_race module
 ----------------------------
 

@@ -23,7 +23,7 @@ Features
 --------
 
 * Collects data solely for WEC races.
-* Updates a defined `input_select` entity in the defined instance of _`Home Assistant`.
+* Updates a defined `input_select` entity in the defined instance of Home Assistant.
 
 Credits
 -------

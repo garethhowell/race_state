@@ -19,18 +19,18 @@ class HAAuth:
 
     def update(self, update: str) -> requests.Response:
         """Update the Home Assistant entity"""
-        
-        #Insert the access token into the request header.
+
+        # Insert the access token into the request header.
         headers = {}
         headers["Authorization"] = f"Bearer {self.accessToken}"
         self.log.debug("Headers = %s", headers)
 
-        #Set up the request's payload
+        # Set up the request's payload
         payload = {}
         payload['entity_id'] = self.entity
         payload['option'] = update
         self.log.debug("JSON payload = %s", payload)
-        
+
         return requests.post(
             url=self.path, json=payload, headers=headers
         )        
